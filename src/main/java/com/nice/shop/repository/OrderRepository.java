@@ -14,6 +14,6 @@ public interface OrderRepository extends JpaRepository<OrderPage, Integer> {
 	Page<OrderPage> mOrderpage(String userId, Pageable pageable);
 	
 	@Modifying
-	@Query(value = "INSERT INTO orderPage(prdNum, userId, orderCount, orderPrice, createdate) VALUES(:prdNum, :userId, :orderCount, :orderPrice, now())", nativeQuery = true)
+	@Query(value = "INSERT INTO OrderPage(prdNum, userId, orderCount, orderPrice, createdate) VALUES(:prdNum, :userId, :orderCount, :orderPrice, now())", nativeQuery = true)
 	int mOrderPrd(int prdNum, String userId, int orderCount, int orderPrice);
 }

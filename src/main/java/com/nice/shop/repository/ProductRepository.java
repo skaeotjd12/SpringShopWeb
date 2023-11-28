@@ -19,17 +19,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	List<Product> findByprdStatuts(String prdStatuts);
 	
-	@Query(value =  "select * from product where prdNum= :prdNum", nativeQuery = true)
+	@Query(value =  "select * from Product where prdNum= :prdNum", nativeQuery = true)
 	int mProductDetail(int prdNum);
 	
 	//좋아요 카운트 증가
 	@Modifying
-	@Query(value =  "update product set likeCount = likeCount + 1 where prdNum = :prdNum", nativeQuery = true)
+	@Query(value =  "update Product set likeCount = likeCount + 1 where prdNum = :prdNum", nativeQuery = true)
 	int mlikeCount(int prdNum);
 	
 	
 	//좋아요 카운트 감소
 	@Modifying
-	@Query(value =  "update product set likeCount = likeCount - 1 where prdNum = :prdNum", nativeQuery = true)
+	@Query(value =  "update Product set likeCount = likeCount - 1 where prdNum = :prdNum", nativeQuery = true)
 	int munlikeCount(int prdNum);
 }

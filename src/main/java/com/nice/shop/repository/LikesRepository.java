@@ -10,12 +10,12 @@ public interface LikesRepository extends JpaRepository<Likes, Integer> {
 	
 	//좋아요
 	@Modifying
-	@Query(value = "INSERT INTO likes(userId, prdNum, createDate) VALUES(:userId, :prdNum, now())", nativeQuery = true)
+	@Query(value = "INSERT INTO Likes(userId, prdNum, createDate) VALUES(:userId, :prdNum, now())", nativeQuery = true)
 	int mLikes(String userId, int prdNum);
 	
 	
 	//좋아요 취소
 	@Modifying
-	@Query(value = "DELETE FROM likes WHERE userId = :userId AND prdNum= :prdNum", nativeQuery = true)
+	@Query(value = "DELETE FROM Likes WHERE userId = :userId AND prdNum= :prdNum", nativeQuery = true)
 	int munLikes(String userId, int prdNum);
 }
