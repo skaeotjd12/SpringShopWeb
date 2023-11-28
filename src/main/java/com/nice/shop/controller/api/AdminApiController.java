@@ -27,7 +27,7 @@ import com.nice.shop.service.ProductService;
 @RestController
 public class AdminApiController {
 	
-	private static final String UPLOAD_PATH ="C:\\git\\repository\\SpringBootWebProject\\src\\main\\resources\\static\\productImg" ;
+	private static final String UPLOAD_PATH ="/home/ubuntu/app/tomcat/webapps/shop-0.0.1-SNAPSHOT/WEB-INF/classes/static/productImg/" ;
 	
 	@Autowired
 	ProductService productService;
