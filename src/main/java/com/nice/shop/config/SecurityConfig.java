@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class 	SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private AuthenticationFailureHandler customFailureHandler;
 	
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http
 				.csrf().disable() 
 				.authorizeRequests()
-					.antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**","/productImg/**")
+					.antMatchers("/", "/auth/**", "/js/**","/css/**", "/image/**")
 					.permitAll()
 					.anyRequest()
 					.authenticated()

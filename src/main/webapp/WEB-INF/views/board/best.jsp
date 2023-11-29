@@ -11,7 +11,7 @@
 
 <c:forEach var="prd" items="${prds}">
 <div class="card" style="width:400px">
-  <img class="card-img-top" src="/productImg/${prd.prdFilename}" alt="Card image">
+  <img class="card-img-top" src="/upload/${prd.prdFilename}" alt="Card image">
   <div class="card-body">
     <h4 class="card-title">${prd.prdName}</h4>
     <p class="card-text"></p>

@@ -43,7 +43,5 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
- 
-seong:
-  key: seong1234
-      
+file:
+  path: C:/workspace/shopUpload/

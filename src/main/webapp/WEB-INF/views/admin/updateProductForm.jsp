@@ -75,7 +75,10 @@
 <script>
 	$('.summernote').summernote({
 		tabsize : 2,
-		height : 300
+		height : 300,
+		focus : true,
+		lang : "ko-kr",
+
 	});
 </script>
 <script src="/js/admin.js"></script>

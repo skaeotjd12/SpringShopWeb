@@ -6,6 +6,7 @@ import java.util.UUID;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class AdminApiController {
 
-	//C:\git\repository\SpringBootWebProject\src\main\resources\static\productImg 로컬 업로드 절대 경로
-	private static final String UPLOAD_PATH ="/home/ubuntu/app/SpringBootWebProject/src/main/resources/static/productImg/";
+
+	@Value("${file.path}")
+	private String uploadFolder;
+
+
 	@Autowired
 	ProductService productService;
 	
@@ -86,11 +90,11 @@ public class AdminApiController {
 
 		 // 파일 이름 변경
 	    UUID uuid = UUID.randomUUID();
-	    String saveName = uuid + "_" + file.getOriginalFilename();
+		String whitespace = file.getOriginalFilename().replaceAll("\\s", ""); //파일 공백없애기
+	    String saveName = uuid + "_" + whitespace;
 
 	    // 저장할 File 객체를 생성(껍데기 파일)
-	    File saveFile = new File(UPLOAD_PATH,saveName); // 저장할 폴더 이름, 저장할 파일 이름
-
+	    File saveFile = new File(uploadFolder,saveName); // 저장할 폴더 이름, 저장할 파일 이름
 	    try {
 	        file.transferTo(saveFile); // 업로드 파일에 saveFile이라는 껍데기 입힘
 	    } catch (IOException e) {
