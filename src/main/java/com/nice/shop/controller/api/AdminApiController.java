@@ -21,14 +21,15 @@ import com.nice.shop.model.Product;
 import com.nice.shop.service.AdminService;
 import com.nice.shop.service.ProductService;
 
-
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
 public class AdminApiController {
 
-	//C:\git\repository\SpringBootWebProject\src\main\resources\static\productImg 로컬 업로드 경로
-	private static final String UPLOAD_PATH ="home\\ubuntu\\app\\SpringBootWebProject\\target\\classes\\static\\productImg";
+	//C:\git\repository\SpringBootWebProject\src\main\resources\static\productImg 로컬 업로드 절대 경로
+	private static final String UPLOAD_PATH ="/home/ubuntu/app/SpringBootWebProject/src/main/resources/static/productImg/";
 	@Autowired
 	ProductService productService;
 	
@@ -82,6 +83,7 @@ public class AdminApiController {
 	
 	
 	private String saveFile(MultipartFile file) {
+
 		 // 파일 이름 변경
 	    UUID uuid = UUID.randomUUID();
 	    String saveName = uuid + "_" + file.getOriginalFilename();
@@ -97,6 +99,8 @@ public class AdminApiController {
 	    }
 	    return saveName;
 	}
+
+
 }
 
 
