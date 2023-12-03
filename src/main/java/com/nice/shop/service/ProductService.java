@@ -3,6 +3,8 @@ package com.nice.shop.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +25,15 @@ public class ProductService {
 	public List<Product> findListProduct() {
 		return productRepository.findAll();
 		}
-	
+	@Transactional
+	public Page<Product> getAllproduct(int page, int size) {
+		return productRepository.findAll(PageRequest.of(page, size));
+	}
 	//베스트 상품목록
 	@Transactional
-	public List<Product> findListBestProduct(String prdStatuts ) {
+	public List<Product> findListBestProduct(String prdStatuts) {
 		return productRepository.findByprdStatuts(prdStatuts);
-		}
+	}
 	
 	
 	//상품 상세보기 및 좋아요 상태 저장
@@ -46,6 +51,12 @@ public class ProductService {
 			 });
 		return product;
 		}
+
+	@Transactional
+	public List<Product> searchPrd(String keyword) {
+		return productRepository.findByprdNameContaining(keyword);
 	}
+
+}
 	
 

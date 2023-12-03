@@ -12,7 +12,9 @@ import org.springframework.data.jpa.repository.Query;
 import com.nice.shop.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-	
+
+	List<Product> findByprdNameContaining(String keyword);
+
 	Optional<Product> findByprdNum(int prdNum);
 	
 	public Page<Product> findByprdNum(int prdNum, Pageable pageable);
@@ -32,4 +34,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Modifying
 	@Query(value =  "update Product set likeCount = likeCount - 1 where prdNum = :prdNum", nativeQuery = true)
 	int munlikeCount(int prdNum);
+
+
+
 }

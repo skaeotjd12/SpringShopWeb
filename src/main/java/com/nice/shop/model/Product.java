@@ -52,6 +52,7 @@ public class Product {
 	
 	@Column(length = 1000)
 	private String prdFilename;
+
 	
 	//LAZY는 기본전략 안 적어줘도됨 EAGER와 LAZY 차이점 명확히알기
 	//하나의 게시글은 여러개의 댓글을 가질 수 있기 때문에										
