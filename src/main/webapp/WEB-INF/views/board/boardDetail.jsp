@@ -73,6 +73,8 @@
 			<hr>
 	</div>
 	</c:forEach>
+<h1>"${startPage}"</h1>
+	<h1>"${endPage}"</h1>
 
   <%--댓글 페이징--%>
     <ul class="pagination justifu-content-center">
@@ -81,15 +83,27 @@
 			<li class="page-item disabled"><a class="page-link" href="?page=${replys.number-1 }">Previous</a></li>
 		</c:when>
 		<c:otherwise>
-			<li class="page-item"><a class="page-link" href="?page=${replys.number-1 }">Previous</a></li>
+			<li class="page-item"><a class="page-link" href="?page=${startPage-1}">Previous</a></li>
 		</c:otherwise>
 	</c:choose>
+
+<c:forEach var = "num" begin = "${startPage}" end = "${endPage}"  step="1">
+    <choose>
+        <c:when test="${num eq replys.number }">
+             <span> "${num +1}"  </span>
+        </c:when>
+        <c:otherwise>
+            <a href="/board/${prd.prdNum}/${num}">	  "${num +1}"</a>
+        </c:otherwise>
+    </choose>
+</c:forEach>
+
 	<c:choose>
 	<c:when test="${replys.last}">
 	<li class="page-item disabled" ><a class="page-link" href="?page=${replys.number+1 }">Next</a></li>
 	</c:when>
 	<c:otherwise>
-				<li class="page-item"><a class="page-link" href="?page=${replys.number+1}">Next</a></li>
+				<li class="page-item"><a class="page-link" href="?page=${endPage + 1}">Next</a></li>
 			</c:otherwise>
 		</c:choose>    
     </ul>

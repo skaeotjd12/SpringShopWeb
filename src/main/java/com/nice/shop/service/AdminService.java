@@ -28,6 +28,14 @@ public class AdminService {
 		}
 }
 	
+	//@@@@@@@@@@@지우기
+	@Transactional
+	public int testAddPrd(Product product) {
+
+
+		return 1;
+	}
+	
 	
 	//상품 수정
 	@Transactional

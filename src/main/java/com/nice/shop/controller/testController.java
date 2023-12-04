@@ -23,7 +23,7 @@ public class testController {
 
     @GetMapping("/auth/page")
     public String testPage(@RequestParam(defaultValue = "0") int page,
-                           @RequestParam(defaultValue = "3") int size,
+                           @RequestParam(defaultValue = "5") int size,
                            Model model){
 
     Page<Product> PagePrd = productService.getAllproduct(page, size);
@@ -35,9 +35,12 @@ public class testController {
 
 
     @GetMapping("/auth/pa")
-    public Page<Product> testPageable(@PageableDefault(size=5, direction = Sort.Direction.DESC) Pageable pageable){
+    public String testPageable(@PageableDefault(size=5,sort = "prdNum", direction = Sort.Direction.DESC) Pageable pageable,
+                               Model model){
         Page<Product> PagePageable = productRepository.findAll(pageable);
-
-        return  PagePageable;
+        int endPage =  (int)(Math.ceil(pageable.getPageNumber()/10.0))*10;
+        int startPage = endPage -9;
+        model.addAttribute("page", PagePageable);
+        return  "test";
     }
 }

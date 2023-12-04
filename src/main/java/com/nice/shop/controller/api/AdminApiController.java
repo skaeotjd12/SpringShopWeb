@@ -2,19 +2,17 @@ package com.nice.shop.controller.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
+import com.nice.shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nice.shop.dto.ResponseDto;
@@ -35,6 +33,8 @@ public class AdminApiController {
 
 
 	@Autowired
+	ProductRepository productRepository;
+	@Autowired
 	ProductService productService;
 	
 	@Autowired
@@ -50,14 +50,30 @@ public class AdminApiController {
 		    } else { // 파일 저장 실패
 		    	return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR.value(), -1);
 		    }
-		product.setPrdFilename(fileResult);
-		int result = adminService.상품등록(product);
-		if(result==-1) {
-			return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR.value(), -1); 
-		}
+				product.setPrdFilename(fileResult);
+
+			int result = adminService.상품등록(product);
+			if(result==-1) {
+				return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR.value(), -1);
+			}
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-	
 	}
+
+
+	@RequestMapping(value="/admin/testaddPrd")
+	public int testAddPrd(Product product) {
+		product.setPrdName("sdsdds");
+		product.setPrdDetail("aaaa");
+		product.setPrdCtg("asdsd");
+		product.setPrdStatuts("sdsd");
+		product.setPrdPrice(123123);
+		product.setPrdFilename("wdwdwd");
+
+		adminService.testAddPrd(product);
+
+		return 1;
+	}
+
 	
 	
 	

@@ -11,9 +11,16 @@
 
 <div class="indexContainer">
 <h1>test</h1>
-    <c:forEach var="page" items="${page.content}">
+    <c:forEach var="pag" items="${page.content}">
         <div>
-         1번 :    "${page.prdNum}"
+         totalPages : "${page.totalPages}" // 총 페이지 수
+         pageNumber : "${page.number}" //현재 페이지 넘버
+         pageSize : "${page.size}" //페이지당 게시글 수
+         first : "${page.first}"
+         last : "${page.last}"
+         numberOfElemments : "${page.numberOfElements}" //페이지의 게시글
+         totalElements : "${page.totalElements}" //게시글 총 개수
+
         </div>
   	</c:forEach>
 </div>

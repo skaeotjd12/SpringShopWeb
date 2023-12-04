@@ -2,6 +2,7 @@ package com.nice.shop.controller;
 
 
 import com.nice.shop.model.Product;
+import com.nice.shop.model.Reply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,8 +58,18 @@ public class ProductController {
 		public String prdDetail(@PathVariable int prdNum, Model model,
 				@PageableDefault(size=5, sort = "replyId", direction = Direction.DESC) Pageable pageable,
 				@AuthenticationPrincipal PrincipalDetail principalDetail) {
-			model.addAttribute("prd", productService.상품상세(prdNum, principalDetail.getUsername()));
-			model.addAttribute("replys", replyService.댓글목록(prdNum,pageable));
+			Page<Reply> replyList = replyService.댓글목록(prdNum,pageable);
+			Product product = productService.상품상세(prdNum, principalDetail.getUsername());
+			int blocklimit = 3;
+			//int startPage = ((int)(Math.ceil((double)replyList.getNumber() / blocklimit))-1) * blocklimit +1;
+			//int endPage = ((startPage + blocklimit -1 ) < replyList.getTotalPages()) ? startPage + blocklimit -1 : replyList.getTotalPages();
+			int startPage = (int)(Math.ceil(pageable.getPageNumber() / blocklimit))*blocklimit;
+			int endPage = startPage + blocklimit -1 ;
+			model.addAttribute("prd", product);
+			model.addAttribute("replys", replyList);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage" , endPage);
+
 			return "board/boardDetail";
 		}
 		
