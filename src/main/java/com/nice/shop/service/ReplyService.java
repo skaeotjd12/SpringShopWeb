@@ -5,7 +5,9 @@ package com.nice.shop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +37,9 @@ public class ReplyService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Reply> 댓글목록(int prdNum,Pageable pageable) {
-			return  replyRepository.findByProduct_PrdNum(prdNum,pageable);
+	public Page<Reply> 댓글목록(int prdNum, Pageable pageable) {
+			int page = pageable.getPageNumber() -1;
+			int pageLimit = 3;
+			return  replyRepository.findByProduct_PrdNum(prdNum, PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.DESC, "replyId")));
 	}
 }

@@ -1,20 +1,11 @@
 function orderPriceBtn(prdPrice, prdCount) {
-	let orderPrice = prdPrice * prdCount;
+	var orderPrice = prdPrice * prdCount;
 	alert(orderPrice)
-	
 	$("#orderPrice").val(orderPrice)
-	
 	};
 
-let index = {
-	init: function() {
-		$("#btn-orderPrd").on("click", () => { 
-			this.buyPrd();
-		});
-	},
-	
-	buyPrd: function() {
-		alert('buy의 orderPrd 함수 호출됨');
+function orderPrd() {
+		alert('orderJs orderPrd 함수 호출됨');
 		
 		let data = {
 			prdNum: $("#prdNum").val(),
@@ -42,9 +33,8 @@ let index = {
 			alert(JSON.stringify(error));
 		});
 	}
-}
 
-index.init(); 
 
-	
+
+
 	

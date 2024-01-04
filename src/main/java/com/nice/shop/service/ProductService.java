@@ -6,6 +6,8 @@ import com.nice.shop.dto.ReplySaveRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +29,10 @@ public class ProductService {
 		return productRepository.findAll();
 		}
 	@Transactional
-	public Page<Product> getAllproduct(int page, int size) {
-		return productRepository.findAll(PageRequest.of(page, size));
+	public Page<Product> getAllproduct(Pageable pageable) {
+		int page = pageable.getPageNumber() -1;
+		int pageLimit = 6;
+		return productRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.ASC, "prdNum")));
 	}
 	//베스트 상품목록
 	@Transactional
@@ -54,8 +58,10 @@ public class ProductService {
 		}
 
 	@Transactional
-	public List<Product> searchPrd(String keyword) {
-		return productRepository.findByprdNameContaining(keyword);
+	public Page<Product> searchPrd(String keyword, Pageable pageable) {
+		int page = pageable.getPageNumber() -1;
+		int pageLimit = 6;
+		return productRepository.findByprdNameContaining(keyword,PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.ASC, "prdNum")));
 	}
 
 

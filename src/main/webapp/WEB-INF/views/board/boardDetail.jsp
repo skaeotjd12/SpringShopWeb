@@ -29,7 +29,19 @@
 	<div>
 		<a href="/board/${prd.prdNum}/${principal.user.userId}/orderForm" class="btn btn-primary">구매</a>
 	</div>
-	
+	</br>
+     <h1>${page}</h1>
+     <h1>${keyword }</h1>
+     <c:choose>
+        <c:when test="${keyword eq null}">
+            <a href="/?page=${page}" class="btn btn-primary">목록</a>
+        </c:when>
+        <c:otherwise>
+            <a href="/board/search?page=${page}&keyword=${keyword}" class="btn btn-primary">목록</a>
+        </c:otherwise>
+     </c:choose>
+
+
 	<hr>
 	<!-- 댓글 입력 영역 -->
 <div class="card-body">
@@ -63,7 +75,7 @@
   
   <%--댓글 목록--%>
   	
-	<c:forEach var="replys" items="${replys.content}">
+	<c:forEach var="replys" items="${pages.content}">
 	<div>
 		<h2>${replys.user.userName} : ${replys.replyText}</h2>
 		<%-- 본인 댓글 삭제, 유저 타입 'ADMIN'만 삭제 가능토록 버튼 구현 --%>
@@ -73,44 +85,62 @@
 			<hr>
 	</div>
 	</c:forEach>
-<h1>"${startPage}"</h1>
-	<h1>"${endPage}"</h1>
+
+	<h1>총 개수 : ${pages.totalPages}</h1>
+	<h1>start : ${startPage}</h1>
+	<h1>end : ${endPage}</h1>
+	<h1>현재 : ${pages.number}</h1>
+    <h1>전체 댓글 수 : ${pages.totalElements}</h1>
+
 
   <%--댓글 페이징--%>
     <ul class="pagination justifu-content-center">
+
+<%--이전, 처음 버튼 분기 --%>
 	<c:choose>
-		<c:when test="${replys.first}">
-			<li class="page-item disabled"><a class="page-link" href="?page=${replys.number-1 }">Previous</a></li>
+		<c:when test="${pages.first}">
+		     <li class="page-item disabled"><a class="page-link">처음</a></li>
+			<li class="page-item disabled"><a class="page-link">이전</a></li>
 		</c:when>
+
+		<c:when test="${startPage eq '1'}">
+		                 <li class="page-item disabled"><a class="page-link" href="?page=1&keyword=${keyword}">처음</a></li>
+        		        <li class="page-item"><a class="page-link" href="?page=${startPage}&keyword=${keyword}">이전</a></li>
+
+        </c:when>
 		<c:otherwise>
-			<li class="page-item"><a class="page-link" href="?page=${startPage-1}">Previous</a></li>
+		     <li class="page-item"><a class="page-link" href="?page=1&keyword=${keyword}">처음</a></li>
+            <li class="page-item"><a class="page-link" href="?page=${startPage-1}&keyword=${keyword}">이전</a></li>
 		</c:otherwise>
 	</c:choose>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <%--페이지 번호 --%>
 <c:forEach var = "num" begin = "${startPage}" end = "${endPage}"  step="1">
-    <choose>
-        <c:when test="${num eq replys.number }">
-             <span> "${num +1}"  </span>
-        </c:when>
-        <c:otherwise>
-            <a href="/board/${prd.prdNum}/${num}">	  "${num +1}"</a>
-        </c:otherwise>
-    </choose>
-</c:forEach>
-
-	<c:choose>
-	<c:when test="${replys.last}">
-	<li class="page-item disabled" ><a class="page-link" href="?page=${replys.number+1 }">Next</a></li>
-	</c:when>
-	<c:otherwise>
-				<li class="page-item"><a class="page-link" href="?page=${endPage + 1}">Next</a></li>
+		<c:choose>
+			<c:when test="${pages.number+1 eq num}">
+				 <span> ${num} </span>
+			</c:when>
+			<c:otherwise>
+				<span><a href="?page=${num}&keyword=${keyword}">	 ${num}</a></span>
 			</c:otherwise>
-		</c:choose>    
+		</c:choose>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</c:forEach>
+
+
+<%--다음 , 끝 버튼 분기--%>
+	<c:choose>
+	<c:when test="${pages.last}">
+	<li class="page-item disabled" ><a class="page-link">다음</a></li>
+	<li class="page-item disabled"><a class="page-link" >끝</a></li>
+	</c:when>
+	    <c:otherwise>
+			<li class="page-item "><a class="page-link" href="?page=${endPage + 1}&keyword=${keyword}">다음</a></li>
+            <li class="page-item"><a class="page-link" href="?page=${pages.totalPages}&keyword=${keyword}">끝</a></li>
+        </c:otherwise>
+		</c:choose>
     </ul>
-
-
-    
-  </div>
+</div>
 <script src="/js/reply.js"></script>
 <script src="/js/like.js"></script>
 	  <%@ include file="../layout/footer.jsp"%>

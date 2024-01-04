@@ -19,10 +19,14 @@
 		position: relative;
 	}
 </style>
+
+
 <h1 style="text-align:center">상품 구매</h1>
+<input type="hidden" id = "userName" value="${principal.user.userId}"/>
+<input type="hidden" id = "userId" value="${principal.user.userName}"/>
 
 <div class="joinContainer">
-    <form  id="form">
+    <form>
     	<div class="ctg"  >
     	상품 카테고리&nbsp;&nbsp;| ${prd.prdCtg }
     	<input type="hidden" class="form-control" value="${prd.prdCtg }"id="prdCtg" readonly="readonly" >
@@ -53,8 +57,12 @@
 		
         <br>
 		</form>
-		<button type="button" id="btn-orderPrd" class="btn btn-primary">상품 구매</button>
-</div>
+		<!-- 상품 구매 버튼 orderform으로 이동
+		<button type="button" id="btn-orderPrd" onclick="" class="btn btn-primary">상품 구매</button>
+		-->
+		<button type="button" class="btn btn-primary" id="kakaopay">상품 구매</button>
 
+</div>
+<script src="/js/payment.js"></script>
 <script src="/js/order.js"></script>
 	  <%@ include file="../layout/footer.jsp"%>

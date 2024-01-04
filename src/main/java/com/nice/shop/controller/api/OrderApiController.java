@@ -16,12 +16,11 @@ public class OrderApiController {
 	@Autowired
 	OrderService orderService;
 	
-	//상품 구매
+			//상품 구매
 			@PostMapping("/api/board/{prdNum}/orderPrd")
 			public ResponseDto<Integer> orderPrd(@RequestBody OrderInfoDto orderInfoDto) {
 				orderService.orderPrd(orderInfoDto);
 				
 				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바 오브젝트를 JSON으로 변환해서 리턴
 			}
-			
 }

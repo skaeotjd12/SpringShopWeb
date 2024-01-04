@@ -13,7 +13,7 @@ import com.nice.shop.model.Reply;
 
 public interface ReplyRepository extends JpaRepository<Reply, Integer> {
 
-	public Page<Reply> findByProduct_PrdNum(int prdNum,Pageable pageable);
+	Page<Reply> findByProduct_PrdNum(int prdNum,Pageable pageable);
 	
 	
 	//댓글작성

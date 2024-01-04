@@ -13,7 +13,7 @@ import com.nice.shop.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	List<Product> findByprdNameContaining(String keyword);
+	Page<Product> findByprdNameContaining(String keyword,Pageable pageable);
 
 	Optional<Product> findByprdNum(int prdNum);
 	

@@ -1,12 +1,12 @@
 package com.nice.shop.controller;
 
 
+import com.nice.shop.config.Pagination;
 import com.nice.shop.model.Product;
 import com.nice.shop.model.Reply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,6 @@ import com.nice.shop.service.ProductService;
 import com.nice.shop.service.ReplyService;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,23 +26,35 @@ public class ProductController {
 
 	private final ProductService productService;
 	private final ReplyService replyService;
-	
-		//메인페이지
-//		@GetMapping({"","/"})
-//		public String index(Model model) {
-//
-//			model.addAttribute("prds", productService.findListProduct());
-//			return "index";
-//		}
+	private final Pagination pagination;
 
 
-	@GetMapping({"","/"})
+	@GetMapping({"","/","/board/search"})
 	public String index(Model model,
-						@RequestParam(defaultValue = "0") int page,
-						@RequestParam(defaultValue = "10") int size) {
+						String keyword,
+						@PageableDefault(page = 1)Pageable pageable) {
+		if (keyword != null) {
+			Page<Product> searchList = productService.searchPrd(keyword,pageable);
 
-		model.addAttribute("prds", productService.getAllproduct(page, size));
-		return "index"; //=
+			pagination.setBlockLimit(5);
+			int startPage = pagination.getStartPage(pageable);
+			int endPage = pagination.getEndPage(searchList,startPage);
+
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("pages", searchList);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage" , endPage);
+			return "index";
+		}
+		Page<Product> productList = productService.getAllproduct(pageable);
+		pagination.setBlockLimit(10);
+		int startPage = pagination.getStartPage(pageable);
+		int endPage = pagination.getEndPage(productList,startPage);
+
+		model.addAttribute("pages", productList);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage" , endPage);
+		return "index";
 	}
 		//베스트목록
 		@GetMapping("/board/best")
@@ -53,20 +64,23 @@ public class ProductController {
 			return "board/best";
 		}
 		
-		//상품 상세보기,댓글목록 
+		//상품 상세보기,댓글목록 페이징처리
 		@GetMapping("/board/{prdNum}")
 		public String prdDetail(@PathVariable int prdNum, Model model,
-				@PageableDefault(size=5, sort = "replyId", direction = Direction.DESC) Pageable pageable,
-				@AuthenticationPrincipal PrincipalDetail principalDetail) {
-			Page<Reply> replyList = replyService.댓글목록(prdNum,pageable);
+								@PageableDefault(page = 1) Pageable pageable,
+								@RequestParam String page,
+								@RequestParam String keyword,
+			                	@AuthenticationPrincipal PrincipalDetail principalDetail) {
+
+			Page<Reply> replyList = replyService.댓글목록(prdNum,  pageable);
 			Product product = productService.상품상세(prdNum, principalDetail.getUsername());
-			int blocklimit = 3;
-			//int startPage = ((int)(Math.ceil((double)replyList.getNumber() / blocklimit))-1) * blocklimit +1;
-			//int endPage = ((startPage + blocklimit -1 ) < replyList.getTotalPages()) ? startPage + blocklimit -1 : replyList.getTotalPages();
-			int startPage = (int)(Math.ceil(pageable.getPageNumber() / blocklimit))*blocklimit;
-			int endPage = startPage + blocklimit -1 ;
+			pagination.setBlockLimit(3);
+			int startPage = pagination.getStartPage(pageable);
+			int endPage = pagination.getEndPage(replyList, startPage);
 			model.addAttribute("prd", product);
-			model.addAttribute("replys", replyList);
+			model.addAttribute("page", page);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("pages", replyList);
 			model.addAttribute("startPage", startPage);
 			model.addAttribute("endPage" , endPage);
 
@@ -80,10 +94,5 @@ public class ProductController {
 			return "board/orderForm";
 		}
 
-		@GetMapping("/board/search")
-		public String searchPrd(Model model, String keyword) {
-			List<Product> searchList = productService.searchPrd(keyword);
-			model.addAttribute("searchList", searchList);
-			return "board/searchList";
-		}
+
 }

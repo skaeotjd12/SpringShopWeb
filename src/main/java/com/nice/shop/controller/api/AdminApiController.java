@@ -59,7 +59,7 @@ public class AdminApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 
-
+	//추후 삭제
 	@RequestMapping(value="/admin/testaddPrd")
 	public int testAddPrd(Product product) {
 		product.setPrdName("sdsdds");

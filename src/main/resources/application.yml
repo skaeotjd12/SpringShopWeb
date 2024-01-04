@@ -44,4 +44,6 @@ spring:
       fail-on-empty-beans: false
 
 file:
-  path: C:/workspace/shopUpload/
+  path: /home/ubuntu/shopUpload/
+##C:/workspace/shopUpload/     local upload file 저장 공간
+##/home/ubuntu/shopUpload/      ec2 저장공간

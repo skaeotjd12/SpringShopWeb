@@ -31,7 +31,7 @@ public class AdminService {
 	//@@@@@@@@@@@지우기
 	@Transactional
 	public int testAddPrd(Product product) {
-
+		productRepository.save(product);
 
 		return 1;
 	}
