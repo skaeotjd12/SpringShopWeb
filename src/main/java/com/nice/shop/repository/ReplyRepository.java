@@ -18,7 +18,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
 	
 	//댓글작성
 	@Modifying
-	@Query(value = "INSERT INTO Reply(userId, prdNum, replyText, createDate) VALUES(?1, ?2, ?3,now())", nativeQuery = true)
+	@Query(value = "INSERT INTO Reply(userId, prdNum, replyText, createDate) VALUES(:userId, :prdNum, :replyText,now())", nativeQuery = true)
 	int mSave(String userId, int prdNum, String replyText); //업데이트된 행의 개수를 리턴해줌.
 	
 

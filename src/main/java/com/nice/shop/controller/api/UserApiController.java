@@ -26,7 +26,7 @@ public class UserApiController {
 	
 	
 	@PostMapping("/auth/joinProc")
-	public ResponseDto<Integer> save(@RequestBody User user) {
+	public ResponseDto<Integer> join(@RequestBody User user) {
 		int result = userService.회원가입(user);
 		
 		if(result==-1) {

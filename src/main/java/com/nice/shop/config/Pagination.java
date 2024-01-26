@@ -15,10 +15,7 @@ import org.springframework.data.web.PageableDefault;
 @Configuration
 public class Pagination {
 
-
-
     private int blockLimit = 10;
-
 
     public int getStartPage(@PageableDefault(page = 1) Pageable pageable) {
         return ((int)(Math.ceil((double)(pageable.getPageNumber())  / blockLimit))-1)*blockLimit+1;

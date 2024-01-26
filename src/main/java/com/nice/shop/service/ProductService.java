@@ -28,15 +28,23 @@ public class ProductService {
 	public List<Product> findListProduct() {
 		return productRepository.findAll();
 		}
+
+
 	@Transactional
 	public Page<Product> getAllproduct(Pageable pageable) {
 		int page = pageable.getPageNumber() -1;
-		int pageLimit = 6;
+		int pageLimit = 4;
 		return productRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.ASC, "prdNum")));
 	}
 	//베스트 상품목록
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Product> findListBestProduct(String prdStatuts) {
+		return productRepository.findByprdStatuts(prdStatuts);
+	}
+
+	//신상 상품목록
+	@Transactional(readOnly = true)
+	public List<Product> findListNewProduct(String prdStatuts) {
 		return productRepository.findByprdStatuts(prdStatuts);
 	}
 	
@@ -56,12 +64,14 @@ public class ProductService {
 			 });
 		return product;
 		}
-
-	@Transactional
+		
+	//검색 페이지
+	@Transactional(readOnly = true)
 	public Page<Product> searchPrd(String keyword, Pageable pageable) {
 		int page = pageable.getPageNumber() -1;
-		int pageLimit = 6;
-		return productRepository.findByprdNameContaining(keyword,PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.ASC, "prdNum")));
+		int pageLimit = 4;
+		return productRepository.findByprdNameContaining(keyword,
+				PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.ASC, "prdNum")));
 	}
 
 

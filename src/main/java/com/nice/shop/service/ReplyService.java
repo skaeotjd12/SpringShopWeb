@@ -26,7 +26,7 @@ public class ReplyService {
 	
 	
 	@Transactional
-	public void deleteReply(int replyId) {
+	public void 댓글삭제(int replyId) {
 		replyRepository.deleteById(replyId);
 	}
 	

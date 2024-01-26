@@ -5,7 +5,7 @@
 	<form action="/auth/loginProc" method="post">
 
 		<div class="form-group">
-			<label for="아이디">아이디</label> <input type="text" class="form-control" placeholder="Enter username" name="userId" id="userId">
+			<label for="아이디">아이디</label> <input type="text" class="form-control" placeholder="Enter userId" name="userId" id="userId">
 		</div>
 
 		<div class="form-group">

@@ -18,8 +18,10 @@
  <!-- 서머노트를 위해 추가해야할 부분 -->
  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-  <!--  -->
+
+  <!-- 포트원 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
 <style type="text/css">
 .header{
 	max-width: none;
@@ -80,9 +82,14 @@ hr {
 			<a class="navbar-brand font-weight-bold" href="/">NiceShop</a>
 		<div class="menu_wrap2 collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
 			<ul class="navbar-nav justify-content-center">
-				<li class="nav-item"><a class="nav-link" href="/board/best">NEW ARRIVAL</a></li>
+				<li class="nav-item"><a class="nav-link" href="/board/best">BEST</a></li>
 			</ul>
+			<ul class="navbar-nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="/board/new">NEW ARRIVAL</a></li>
+            </ul>
 		</div>
 	</nav>
 </div>
 	<br>
+
+<h3>관리자 ID = "aa" PW = "1234"</h3>

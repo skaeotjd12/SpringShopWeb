@@ -24,75 +24,84 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ProductController {
 
-	private final ProductService productService;
-	private final ReplyService replyService;
-	private final Pagination pagination;
+    private final ProductService productService;
+    private final ReplyService replyService;
+    private final Pagination pagination;
 
+	//메인화면 (검색, 메인화면 분기)
+    @GetMapping({"", "/", "/board/search"})
+    public String index(Model model,
+                        String keyword,
+                        @PageableDefault(page = 1) Pageable pageable) {
+        if (keyword != null) {
+            Page<Product> searchList = productService.searchPrd(keyword, pageable);
 
-	@GetMapping({"","/","/board/search"})
-	public String index(Model model,
-						String keyword,
-						@PageableDefault(page = 1)Pageable pageable) {
-		if (keyword != null) {
-			Page<Product> searchList = productService.searchPrd(keyword,pageable);
+            pagination.setBlockLimit(5);
+            int startPage = pagination.getStartPage(pageable);
+            int endPage = pagination.getEndPage(searchList, startPage);
 
-			pagination.setBlockLimit(5);
-			int startPage = pagination.getStartPage(pageable);
-			int endPage = pagination.getEndPage(searchList,startPage);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("pages", searchList);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            return "index";
+        }
+        Page<Product> productList = productService.getAllproduct(pageable);
+        pagination.setBlockLimit(10);
+        int startPage = pagination.getStartPage(pageable);
+        int endPage = pagination.getEndPage(productList, startPage);
 
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("pages", searchList);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage" , endPage);
-			return "index";
-		}
-		Page<Product> productList = productService.getAllproduct(pageable);
-		pagination.setBlockLimit(10);
-		int startPage = pagination.getStartPage(pageable);
-		int endPage = pagination.getEndPage(productList,startPage);
+        model.addAttribute("pages", productList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "index";
+    }
 
-		model.addAttribute("pages", productList);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage" , endPage);
-		return "index";
-	}
-		//베스트목록
-		@GetMapping("/board/best")
-		public String boardBest(Model model) {
-			
-			model.addAttribute("prds", productService.findListBestProduct("best"));
-			return "board/best";
-		}
-		
-		//상품 상세보기,댓글목록 페이징처리
-		@GetMapping("/board/{prdNum}")
-		public String prdDetail(@PathVariable int prdNum, Model model,
-								@PageableDefault(page = 1) Pageable pageable,
-								@RequestParam String page,
-								@RequestParam String keyword,
-			                	@AuthenticationPrincipal PrincipalDetail principalDetail) {
+    //베스트목록
+    @GetMapping("/board/best")
+    public String boardBest(Model model) {
 
-			Page<Reply> replyList = replyService.댓글목록(prdNum,  pageable);
-			Product product = productService.상품상세(prdNum, principalDetail.getUsername());
-			pagination.setBlockLimit(3);
-			int startPage = pagination.getStartPage(pageable);
-			int endPage = pagination.getEndPage(replyList, startPage);
-			model.addAttribute("prd", product);
-			model.addAttribute("page", page);
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("pages", replyList);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage" , endPage);
+        model.addAttribute("prds", productService.findListBestProduct("best"));
+        return "board/best";
+    }
+    
+    //신상품 목록
+    @GetMapping("/board/new")
+    public String boardNew(Model model) {
 
-			return "board/boardDetail";
-		}
-		
-		//상세보기 -> 상품 구매페이지
-		@GetMapping("/board/{prdNum}/{userId}/orderForm")
-		public String orderForm(@PathVariable int prdNum, Model model,@AuthenticationPrincipal PrincipalDetail principalDetail) {
-			model.addAttribute("prd", productService.상품상세(prdNum, principalDetail.getUsername()));
-			return "board/orderForm";
-		}
+        model.addAttribute("prds", productService.findListNewProduct("new"));
+        return "board/new";
+    }
+
+    //상품 상세보기,댓글목록 페이징처리
+    @GetMapping("/board/{prdNum}")
+    public String prdDetail(@PathVariable int prdNum, Model model,
+                            @PageableDefault(page = 1) Pageable pageable,
+                            @RequestParam String page,
+                            @RequestParam String keyword,
+                            @AuthenticationPrincipal PrincipalDetail principalDetail) {
+
+        Page<Reply> replyList = replyService.댓글목록(prdNum, pageable);
+        Product product = productService.상품상세(prdNum, principalDetail.getUsername());
+        pagination.setBlockLimit(3);
+        int startPage = pagination.getStartPage(pageable);
+        int endPage = pagination.getEndPage(replyList, startPage);
+        model.addAttribute("prd", product);
+        model.addAttribute("page", page);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("pages", replyList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "board/boardDetail";
+    }
+
+    //상세보기 -> 상품 구매페이지
+    @GetMapping("/board/{prdNum}/{userId}/orderForm")
+    public String orderForm(@PathVariable int prdNum, Model model, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        model.addAttribute("prd", productService.상품상세(prdNum, principalDetail.getUsername()));
+        return "board/orderForm";
+    }
 
 
 }

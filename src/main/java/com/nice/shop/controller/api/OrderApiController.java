@@ -21,6 +21,6 @@ public class OrderApiController {
 			public ResponseDto<Integer> orderPrd(@RequestBody OrderInfoDto orderInfoDto) {
 				orderService.orderPrd(orderInfoDto);
 				
-				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바 오브젝트를 JSON으로 변환해서 리턴
+				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 			}
 }

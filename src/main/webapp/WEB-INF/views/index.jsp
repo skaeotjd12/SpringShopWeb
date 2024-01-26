@@ -27,13 +27,14 @@
   <div class="card-body">
     <h4 class="card-title">${prd.prdName}</h4>
     <p class="card-text"><b>${prd.prdPrice }원</b></p>
+
     <%--상세보기 검색, 메인화면 분기 --%>
     <c:choose>
             <c:when test="${keyword eq null}">
-                <a href="/board/${prd.prdNum}?page=${pages.number +1}&keyword=""" class="btn btn-primary">상세보기</a>
+                <a href="/board/${prd.prdNum}?page=1&keyword=""" class="btn btn-primary">상세보기</a>
             </c:when>
             <c:otherwise>
-                <a href="/board/${prd.prdNum}?page=${pages.number +1}&keyword=${keyword}" class="btn btn-primary">상세보기</a>
+                <a href="/board/${prd.prdNum}?page=1&keyword=${keyword}" class="btn btn-primary">상세보기</a>
             </c:otherwise>
          </c:choose>
 
@@ -43,7 +44,9 @@
 </div>
 <c:choose>
 <c:when test="${keyword eq null}">
- <%--댓글 페이징--%>
+
+
+<%--댓글 페이징--%>
     <ul class="pagination justifu-content-center">
 
 <%--이전, 처음 버튼 분기 --%>
@@ -84,6 +87,10 @@
 	<li class="page-item disabled" ><a class="page-link">다음</a></li>
 	<li class="page-item disabled"><a class="page-link" href="?page=${pages.totalPages}">끝</a></li>
 	</c:when>
+	<c:when test="${endPage eq pages.totalPages}">
+        <li class="page-item" ><a class="page-link" href="?page=${pages.number+2}">다음</a></li>
+        <li class="page-item disabled"><a class="page-link" href="?page=${pages.totalPages}">끝</a></li>
+    </c:when>
 	    <c:otherwise>
 			<li class="page-item "><a class="page-link" href="?page=${endPage + 1}">다음</a></li>
             <li class="page-item"><a class="page-link" href="?page=${pages.totalPages}">끝</a></li>
@@ -134,6 +141,10 @@
         	<li class="page-item disabled" ><a class="page-link">다음</a></li>
         	<li class="page-item disabled"><a class="page-link">끝</a></li>
         	</c:when>
+        	<c:when test="${endPage eq pages.totalPages}">
+                <li class="page-item" ><a class="page-link" href="?page=${pages.number+2}">다음</a></li>
+                <li class="page-item disabled"><a class="page-link" href="?page=${pages.totalPages}">끝</a></li>
+            </c:when>
         	    <c:otherwise>
         			<li class="page-item "><a class="page-link" href="?page=${endPage + 1}&keyword=${keyword}">다음</a></li>
                     <li class="page-item"><a class="page-link" href="?page=${pages.totalPages}&keyword=${keyword}">끝</a></li>
@@ -144,5 +155,5 @@
 </c:choose>
 
 
-
 <%@ include file="layout/footer.jsp"%>
+ls

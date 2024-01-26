@@ -17,7 +17,7 @@ public class AdminService {
 	
 	//상품 등록
 	@Transactional
-	public int 상품등록(Product product) {
+	public int addPrd(Product product) {
 		try{
 			productRepository.findByprdNum(product.getPrdNum()).get(); //같은 prdNum이 있으면 에러
 			return -1;

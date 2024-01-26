@@ -78,22 +78,17 @@
 	<c:forEach var="replys" items="${pages.content}">
 	<div>
 		<h2>${replys.user.userName} : ${replys.replyText}</h2>
-		<%-- 본인 댓글 삭제, 유저 타입 'ADMIN'만 삭제 가능토록 버튼 구현 --%>
+
+	<%-- 본인 댓글 삭제, 유저 타입 'ADMIN'만 삭제 가능토록 버튼 구현 --%>
 			<c:if test="${principal.user.userId eq replys.user.userId or principal.user.role eq 'ADMIN'}">
 				<button class="btn btn-primary" onclick="deleteReply(${replys.replyId})"">댓글 삭제</button>
 			</c:if>
-			<hr>
+	<hr>
 	</div>
 	</c:forEach>
 
-	<h1>총 개수 : ${pages.totalPages}</h1>
-	<h1>start : ${startPage}</h1>
-	<h1>end : ${endPage}</h1>
-	<h1>현재 : ${pages.number}</h1>
-    <h1>전체 댓글 수 : ${pages.totalElements}</h1>
 
-
-  <%--댓글 페이징--%>
+<%--댓글 페이징--%>
     <ul class="pagination justifu-content-center">
 
 <%--이전, 처음 버튼 분기 --%>
@@ -134,6 +129,10 @@
 	<li class="page-item disabled" ><a class="page-link">다음</a></li>
 	<li class="page-item disabled"><a class="page-link" >끝</a></li>
 	</c:when>
+	<c:when test="${endPage eq pages.totalPages}">
+        <li class="page-item" ><a class="page-link" href="?page=${pages.number+2}&keyword=${keyword}">다음</a></li>
+        <li class="page-item disabled"><a class="page-link" href="?page=${pages.totalPages}&keyword=${keyword}">끝</a></li>
+    </c:when>
 	    <c:otherwise>
 			<li class="page-item "><a class="page-link" href="?page=${endPage + 1}&keyword=${keyword}">다음</a></li>
             <li class="page-item"><a class="page-link" href="?page=${pages.totalPages}&keyword=${keyword}">끝</a></li>

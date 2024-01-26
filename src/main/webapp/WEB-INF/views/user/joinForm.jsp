@@ -57,35 +57,35 @@
 <form>
 		<div class="form-group">
 			<label for="username">이름</label>
-			<input type="text" class="form-control" placeholder="Enter username" id="userName">
+			<input type="text" class="form-control"  placeholder="Enter username" id="userName" required="required"/>
 		</div>
 		
 		<div class="form-group">
 			<label for="userId">아이디</label>
-			<input type="text" class="form-control" placeholder="Enter userid" id="userId">
+			<input type="text" class="form-control" placeholder="Enter userid" id="userId" required/>
 		</div>
 		
 		<div class="form-group">
 			<label for="userPwd">비밀번호</label>
-			<input type="password" class="form-control" placeholder="Enter password" id="userPwd">
+			<input type="password" class="form-control" placeholder="Enter password" id="userPwd" required="required"/>
 		</div>
 
 		<div class="form-group">
 			<label for="userPwd_Ok">비밀번호 확인</label> 
-			<input type="password" class="form-control" placeholder="Enter password" id="userPwd_Ok">
+			<input type="password" class="form-control" placeholder="Enter password" id="userPwd_Ok" required="required"/>
 		</div>
 		
 		<div class="form-group">
 			<label for="email">이메일</label> 
-			<input type="email" class="form-control" placeholder="Enter email" id="userEmail">
+			<input type="email" class="form-control" placeholder="Enter email" id="userEmail"/>
 		</div>
 		
 		<div class="form-group">
 			<label for="addr">주소</label> 
 				<input  type="text" id="userZipcode" placeholder="우편번호">
 				<input  type="button" onclick="addressPopup()" value="우편번호 찾기"><br>
-				<input  type="text" id="userAddr" size="50" placeholder="주소" ><br>
-				<input  type="text" id="userDetailAddr" size="20" placeholder="상세주소" >
+				<input  type="text" id="userAddr" size="50" placeholder="주소" required="required"><br>
+				<input  type="text" id="userDetailAddr" size="20" placeholder="상세주소" required="required">
 				<input  type="text" id="sample6_extraAddress" size="30" placeholder="참고항목" readonly="readonly">
 		</div>
 		
