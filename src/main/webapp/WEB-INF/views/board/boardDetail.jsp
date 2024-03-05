@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
+
 	<div>
 		${prd.prdDetail}
 	</div>
@@ -30,8 +31,9 @@
 		<a href="/board/${prd.prdNum}/${principal.user.userId}/orderForm" class="btn btn-primary">구매</a>
 	</div>
 	</br>
-     <h1>${page}</h1>
-     <h1>${keyword }</h1>
+
+
+
      <c:choose>
         <c:when test="${keyword eq null}">
             <a href="/?page=${page}" class="btn btn-primary">목록</a>

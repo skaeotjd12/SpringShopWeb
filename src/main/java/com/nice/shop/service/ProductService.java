@@ -33,7 +33,7 @@ public class ProductService {
 	@Transactional
 	public Page<Product> getAllproduct(Pageable pageable) {
 		int page = pageable.getPageNumber() -1;
-		int pageLimit = 4;
+		int pageLimit = 3;
 		return productRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.DEFAULT_DIRECTION.ASC, "prdNum")));
 	}
 	//베스트 상품목록

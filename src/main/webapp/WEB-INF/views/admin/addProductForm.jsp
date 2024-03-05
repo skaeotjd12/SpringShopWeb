@@ -19,7 +19,11 @@
 		position: relative;
 	}
 </style>
+
 <h1 style="text-align:center">상품 등록</h1>
+<br>
+
+<h2>상품등록 image파일명은 영문으로 변경 후 등록가능합니다.</h2>
 
 <div class="joinContainer">
     <form enctype="multipart/form-data" id="form">
